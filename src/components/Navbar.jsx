@@ -1,19 +1,27 @@
-// src/components/Navbar.js
 import React, { useState, useEffect } from 'react';
 import {
-  AppBar, Toolbar, Typography, Box,
-  IconButton, Drawer, List, ListItem, ListItemButton, ListItemText,
-  useTheme, useMediaQuery
+  AppBar,
+  Toolbar,
+  Typography,
+  Box,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  useTheme,
+  useMediaQuery
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 
-// react-router
+// react-router imports
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
-// react-scroll
-import { Link as ScrollLink, Events as ScrollEvents } from 'react-scroll';
+// react-scroll imports
+import { Link as ScrollLink, Events as ScrollEvents, scroller } from 'react-scroll';
 
 const navigationItems = [
   { label: 'Home', to: 'hero' },
@@ -24,7 +32,7 @@ const navigationItems = [
   { label: 'Contact', to: 'contact' },
 ];
 
-// styled button (unchanged)
+// styled gradient button
 const GradientButton = styled(motion(Box))`
   background: linear-gradient(45deg, #0a192f 30%, #112240 90%);
   border: 1px solid #64ffda;
@@ -52,7 +60,7 @@ export default function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // listen react-scroll events only on homepage
+  // register scroll events
   useEffect(() => {
     ScrollEvents.scrollEvent.register('end', to => setActiveSection(to));
     return () => ScrollEvents.scrollEvent.remove('end');
@@ -60,40 +68,106 @@ export default function Navbar() {
 
   const toggleDrawer = open => () => setDrawerOpen(open);
 
-  const handleClick = to => {
-    if (location.pathname !== '/') {
-      // route home, then scroll
-      navigate('/');
-      setTimeout(() => ScrollLink.scrollTo(to, { smooth: true, offset: -50 }), 100);
+  const handleNavClick = (to) => {
+    // Define route paths for projects, certifications, and blog (on homepage)
+    const routePath = 
+      to === 'projects' ? '/' : 
+      to === 'certifications' ? '/' : 
+      to === 'blog' ? '/' : '/';
+
+    // Handle navigation to different sections within homepage or routing to other pages
+    if (location.pathname !== routePath) {
+      navigate(routePath);
     }
-    // otherwise ScrollLink component will handle scroll
+
+    // Handle scrolling within homepage
+    if (location.pathname === '/' && routePath === '/') {
+      scroller.scrollTo(to, { smooth: true, offset: -50, duration: 500 });
+    }
   };
 
+  // Drawer contents
   const drawerList = (
-    <Box sx={{ width: 240, bgcolor: '#0a192f', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-      <IconButton sx={{ color: '#64ffda', m: 1 }} onClick={toggleDrawer(false)}><CloseIcon/></IconButton>
+    <Box
+      sx={{
+        width: 240,
+        bgcolor: '#0a192f',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between'
+      }}
+      role="presentation"
+    >
+      <IconButton sx={{ color: '#64ffda', m: 1 }} onClick={toggleDrawer(false)}>
+        <CloseIcon />
+      </IconButton>
       <List>
-        {navigationItems.map(item => (
-          <ListItem key={item.to} disablePadding>
-            <ListItemButton onClick={() => { toggleDrawer(false)(); handleClick(item.to); }}>
-              <ListItemText primary={item.label} sx={{ color: '#ccd6f6', textTransform: 'capitalize' }}/>
-            </ListItemButton>
-          </ListItem>
-        ))}
+        {navigationItems.map(item => {
+          const routePath =
+            item.to === 'projects'
+              ? '/'
+              : item.to === 'certifications'
+              ? '/'
+              : item.to === 'blog'
+              ? '/'
+              : '/';
+
+          return (
+            <ListItem key={item.to} disablePadding sx={{ display: 'flex', justifyContent: 'center' }}>
+              <ListItemButton
+                component={RouterLink}
+                to={routePath}
+                onClick={() => {
+                  toggleDrawer(false)();
+                  if (routePath === '/') {
+                    // For Home section scrolling
+                    setTimeout(() => {
+                      scroller.scrollTo(item.to, { smooth: true, offset: -50, duration: 500 });
+                    }, 100);
+                  }
+                }}
+              >
+                <ListItemText
+                  primary={item.label}
+                  sx={{ color: '#ccd6f6', textTransform: 'capitalize', textAlign: 'center' }}
+                />
+              </ListItemButton>
+            </ListItem>
+          );
+        })}
       </List>
+      <Box sx={{ p: 2, bgcolor: '#112240', textAlign: 'center', color: '#64ffda' }}>
+        <Typography variant="body2">&copy; 2025 Yuvapriya.S</Typography>
+      </Box>
     </Box>
   );
 
   return (
     <>
-      <AppBar position="fixed" sx={{ background: 'linear-gradient(45deg,#0a192f 30%,#112240 90%)', boxShadow: 'none' }}>
+      <AppBar
+        position="fixed"
+        sx={{ background: 'linear-gradient(45deg,#0a192f 30%,#112240 90%)', boxShadow: 'none' }}
+      >
         <Toolbar sx={{ justifyContent: 'space-between', px: { xs: 2, md: 4 } }}>
-          <Typography variant="subtitle1" sx={{ fontFamily: "'Space Mono'", fontWeight: 700, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 200 }}>
+          <Typography
+            variant="subtitle1"
+            sx={{
+              fontFamily: "'Space Mono', monospace",
+              fontWeight: 700,
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              maxWidth: 200
+            }}
+          >
             YUVAPRIYA S
           </Typography>
 
           {isMobile ? (
-            <IconButton color="inherit" onClick={toggleDrawer(true)}><MenuIcon/></IconButton>
+            <IconButton color="inherit" onClick={toggleDrawer(true)}>
+              <MenuIcon />
+            </IconButton>
           ) : (
             <Box sx={{ display: 'flex', gap: 2 }}>
               {navigationItems.map(item => {
@@ -104,13 +178,16 @@ export default function Navbar() {
                     active={activeSection === item.to}
                     component={ScrollLink}
                     to={item.to}
-                    spy smooth duration={500} offset={-50}
+                    spy
+                    smooth
+                    duration={500}
+                    offset={-50}
                     sx={{ cursor: 'pointer' }}
                   >
                     {item.label}
                   </GradientButton>
                 ) : (
-                  <GradientButton key={item.to} onClick={() => handleClick(item.to)}>
+                  <GradientButton key={item.to} onClick={() => handleNavClick(item.to)}>
                     {item.label}
                   </GradientButton>
                 );
