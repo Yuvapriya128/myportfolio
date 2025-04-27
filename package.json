@@ -2,7 +2,6 @@
   "name": "myportfolio",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://Yuvapriya128.github.io/myportfolio",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
@@ -51,5 +50,6 @@
   },
   "devDependencies": {
     "gh-pages": "^6.3.0"
-  }
+  },
+  "homepage": "https://Yuvapriya128.github.io/myportfolio"
 }

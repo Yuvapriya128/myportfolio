@@ -14,7 +14,7 @@ const events = [
     desc: 'Selected for Finals of Hacksagon', 
   },
   { 
-    title: 'Volunteering', 
+    title: 'Event Organising', 
     date: 'April 2025', 
     desc: 'Organizing an event named "Code Jenga', 
   },
