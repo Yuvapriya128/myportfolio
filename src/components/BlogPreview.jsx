@@ -1,22 +1,22 @@
 import { motion } from 'framer-motion';
 import { Box, Container, Typography, Paper, Button, Stack } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';  // ✅ for View More
+import { Link } from 'react-router-dom';  // ✅ for View More (change RouterLink to Link)
 
 const events = [
   { 
     title: 'My First Hackathon', 
     date: 'Mar 2025', 
-    desc: 'CodHer - AI tool that simplifies complex topics into easy, child-friendly explanations. ', 
+    desc: 'CodHer - AI tool that simplifies complex topics into easy, child-friendly explanations.',
   },
   { 
     title: 'Second Hackathon', 
     date: 'April 2025', 
-    desc: 'Selected for Finals of Hacksagon', 
+    desc: 'Selected for Finals of Hacksagon',
   },
   { 
     title: 'Event Organising', 
     date: 'April 2025', 
-    desc: 'Organizing an event named "Code Jenga', 
+    desc: 'Organizing an event named "Code Jenga"',
   },
 ];
 
@@ -96,7 +96,7 @@ export default function Blog() {
               variant="contained"
               size="medium"
               color="primary"
-              component={RouterLink}
+              component={Link}  // ✅ Use Link here for React Router v7
               to="/blog"  // ✅ navigate to full blog page
               sx={{ textTransform: 'none', px: 4, py: 1.5 }}
             >

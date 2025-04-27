@@ -10,13 +10,13 @@ import {
   Button,
   Stack
 } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
+import { Link } from "react-router-dom"; // Change RouterLink to Link
 
 export default function Projects() {
   const projects = [
     {
       title: "E-commerce Platform",
-      description: "Online cosmetics shop with cart, checkout flow, and product detail pages. ",
+      description: "Online cosmetics shop with cart, checkout flow, and product detail pages.",
       tech: ["React.js", "Material UI", "LocalStorage", "Framer Motion"],
       link: "#"
     },
@@ -130,7 +130,7 @@ export default function Projects() {
 
         <Box mt={6} textAlign="center">
           <Button
-            component={RouterLink}
+            component={Link} // Use Link here
             to="/more-projects"
             variant="contained"
             sx={{

@@ -7,7 +7,6 @@ import About from "./components/About";
 import Projects from "./components/Projects";
 import Certifications from "./components/Certifications";
 import MoreCertifications from "./components/MoreCertifications";
-// import Blog from "./components/Blog";
 import Contacts from "./components/Contacts";
 import MoreProjects from "./components/MoreProjects";
 import BlogPreview from "./components/BlogPreview";
@@ -32,7 +31,7 @@ export default function App() {
       <CssBaseline />
       <Box sx={{ fontFamily: 'Poppins, sans-serif', scrollBehavior: 'smooth' }}>
         <Navbar />
-        {/* <Routes> */}
+        <Routes>
           <Route
             path="/"
             element={
@@ -49,7 +48,7 @@ export default function App() {
           <Route path="/more-certifications" element={<MoreCertifications />} />
           <Route path="/more-projects" element={<MoreProjects />} />
           <Route path="/blog" element={<BlogPage />} />
-        {/* </Routes> */}
+        </Routes>
       </Box>
     </ThemeProvider>
   );

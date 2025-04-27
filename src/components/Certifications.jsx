@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Box, Typography, Grid, Paper, Chip, Button, Stack, Container } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";  // ✅ Use Link from react-router-dom
 
 export default function Certifications() {
   const certifications = [
@@ -131,7 +131,7 @@ export default function Certifications() {
 
         <Box mt={6} textAlign="center">
           <Button
-            component={Link}
+            component={Link}  // ✅ Link to navigate to more certifications
             to="/more-certifications"
             variant="contained"
             sx={{
